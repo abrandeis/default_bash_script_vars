@@ -1,0 +1,58 @@
+#!/bin/bash
+
+#####
+## Author: Adam brandeis
+## Updated: 2023-05-26
+## Usage: 
+## Description: 
+## 
+#####
+
+
+## DEBUG ENABLED
+#set -xv
+#export PS4='\e[32m+(${BASH_SOURCE} : \e[33m${LINENO})\e[0m :'
+#export PS4='\e[32m+(${BASH_SOURCE} : \e[33m${LINENO})\e[0m : ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+
+
+## Common Variables
+export scriptname=$(basename $0)
+export scriptdir=$(dirname $(readlink -f ${0}))
+
+## Date Variables
+export CURR_DAY=`date +%d`
+export CURR_MONTH=`date +%m`
+export CURR_YEAR=`date +%Y`
+
+## Directory Variables
+export DOWNLOAD_DIR_TMP=${scriptdir}/tmp
+
+## Filename Variables
+export script_info="${scriptdir}/script_info.txt"
+export script_info_support="${scriptdir}/script_info_support.txt"
+
+
+## Create download tmp dir
+if [[ -e ${DOWNLOAD_DIR_TMP} ]]; then
+  rm -rf ${DOWNLOAD_DIR_TMP}
+  mkdir -p ${DOWNLOAD_DIR_TMP}
+fi
+
+
+## Create Script Info for Production email
+#serverDateTime=$(date)
+#serverDateTimeEST=$(date -d "-4 hours")
+echo -e "\n---------------" > ${script_info}
+echo -e "Server time script ran: $(date)" >> ${script_info}
+
+## Create Script Info Support Details for support emails
+echo -e "\n---------------" > ${script_info_support}
+echo -e "Server time script ran: $(date)" >> ${script_info_support}
+echo -e "Hostanme: ${HOSTNAME}" >> ${script_info_support}
+echo -e "Script dir: ${scriptdir}" >> ${script_info_support}
+echo -e "Script Name: ${scriptname}" >> ${script_info_support}
+echo -e "Log File: ${scriptdir}/logs/${scriptname}.$(date +\%Y\%m\%d\%H\%M\%S).log" >> ${script_info_support}
+
+
+
+
