@@ -16,8 +16,8 @@
 
 
 ## Common Variables
-export scriptname=$(basename $0)
-export scriptdir=$(dirname $(readlink -f ${0}))
+export scriptname=$(basename ${BASH_ARGV[0]})
+export scriptdir="$(dirname -- "$(readlink -f -- "$0")")"
 
 ## Date Variables
 export CURR_DAY=`date +%d`
